@@ -1,0 +1,8 @@
+numpy
+keras
+sklearn
+matplotlib
+cached-property
+scipy
+seaborn
+pymc3
