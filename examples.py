@@ -125,3 +125,25 @@ class DummyDatasetForRegression(Dataset):
         plt.fill_between(full_x, low_confidence_itervals, high_confidence_itervals, color='c')
         self.visualize_graphs(graph_alpha=graph_alpha)
         plt.legend()
+
+    def visualize_prior_ensemble_model(
+            self,
+            model,
+            start=-7,
+            stop=7,
+            steps=1000,
+            graph_alpha=0.1,
+            prediction_alpha=0.5,
+    ):
+        full_x = np.linspace(start=start, stop=stop, num=steps)
+        samples = model.predict(full_x)
+        means = samples.mean(axis=0)
+        stds = samples.std(axis=0)
+        low_confidence_itervals = means - stds
+        high_confidence_itervals = means + stds
+        plt.plot(full_x, means, alpha=prediction_alpha, c='r', label='Prediction')
+        plt.plot(full_x, low_confidence_itervals, alpha=prediction_alpha, c='c', label='Low confidence interval')
+        plt.plot(full_x, high_confidence_itervals, alpha=prediction_alpha, c='c', label='High confidence interval')
+        plt.fill_between(full_x, low_confidence_itervals, high_confidence_itervals, color='c')
+        self.visualize_graphs(graph_alpha=graph_alpha)
+        plt.legend()
